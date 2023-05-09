@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
-const cron = require('node-cron');
+
 const axios = require('axios');
+const cron = require('node-cron');
+
 const tempDB = {};
 
 async function getWeatherData(lat, lon) {
@@ -20,12 +22,12 @@ cron.schedule(`*/2 * * * * *`, async () => {
 	await getWeatherData(40.7128, -74.006);
 });
 
-app.get('/', (req, res) => {
-	res.send('Hello, world!');
-});
-
 app.get('/weather', (req, res) => {
 	return res.json(tempDB);
+});
+
+app.get('/', (req, res) => {
+	res.send('Hello, world!');
 });
 
 const port = process.env.PORT || 3000;
